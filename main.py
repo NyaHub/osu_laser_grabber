@@ -4,3 +4,6 @@
 # FileInfo + filsID's -> list of file's and file name's
 # pack all to .osuz archive
 
+import sqlite
+
+print('It's work!')
