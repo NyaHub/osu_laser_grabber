@@ -26,7 +26,7 @@ for i in res:
     # else:
     #     continue
     maps.append(Map(con, path, i[0], i[1]))
-    maps[-1].importMap('maps/')
+    maps[-1].importMap("maps/")
     
     progress = cur.execute('select count(*) from BeatmapSetInfo where ID<='+str(i[0])).fetchall()[0][0]/cur.execute('select count(*) from BeatmapSetInfo').fetchall()[0][0] * 100
     print("%.0f" % progress)

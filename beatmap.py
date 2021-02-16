@@ -26,6 +26,7 @@ class Map:
         self.getMap()
         
     def getMap(self):
+        self.FileInfo.clear()
         filesOrigin = self.cur.execute('select FileInfoID, Filename from BeatmapSetFileInfo where BeatmapSetInfoID='+str(self.BeatmapSetInfoID)).fetchall()
         
         for i in filesOrigin:
