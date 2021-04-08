@@ -1,34 +1,38 @@
 import sqlite3
-from beatmap import Map
+from beatmap import Map, Skin
 import os
+from tkinter import *
 
 path = '/home/vladimir/.local/share/osu/'
-
 db = 'client.db'
+out_skins = './skins/'
+out_maps = './maps/'
 
-con = sqlite3.connect(path+db)
+if not os.path.isdir(out_skins):
+    os.mkdir(out_skins)
+if not os.path.isdir(out_maps):
+    os.mkdir(out_maps)
+
+con = sqlite3.connect(path + db)
 cur = con.cursor()
 
+res = cur.execute('select ID from BeatmapSetInfo;').fetchall()  # get all maps ids
+
 maps = []
-
-res = cur.execute('select ID, MetadataID from BeatmapSetInfo;').fetchall()
-# res = cur.execute('select ID, MetadataID from BeatmapSetInfo where ID=9;').fetchall()
-
-if not os.path.isdir('./tmp'):
-    os.mkdir('./tmp')
-if not os.path.isdir('./maps'):
-    os.mkdir('./maps')
-
-ok = False
 for i in res:
-    # if ok or i[0]==116:
-    #     ok = True
-    # else:
-    #     continue
-    maps.append(Map(con, path, i[0], i[1]))
-    maps[-1].importMap("maps/")
-    
-    progress = cur.execute('select count(*) from BeatmapSetInfo where ID<='+str(i[0])).fetchall()[0][0]/cur.execute('select count(*) from BeatmapSetInfo').fetchall()[0][0] * 100
-    print("%.0f" % progress)
+    maps.append(Map(cur, i[0]))
+    # maps[-1]._get(out_maps)
+    # maps[-1]._import('./maps')
 
+res = cur.execute('select ID from SkinInfo;').fetchall()  # get all skins ids
+
+skins = []
+for i in res:
+    skins.append(Skin(cur, i[0]))
+    # skins[-1]._get(out_skins)
+    # skins[-1]._import('./maps')
+
+window = Tk()
+window.title("title")
+window.mainloop()
 con.close()
