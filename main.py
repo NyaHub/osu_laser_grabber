@@ -21,18 +21,18 @@ res = cur.execute('select ID from BeatmapSetInfo;').fetchall()  # get all maps i
 maps = []
 for i in res:
     maps.append(Map(cur, i[0]))
-    # maps[-1]._get(out_maps)
-    # maps[-1]._import('./maps')
+    maps[-1]._get(path)
+    maps[-1]._import(out_maps)
 
 res = cur.execute('select ID from SkinInfo;').fetchall()  # get all skins ids
 
 skins = []
 for i in res:
     skins.append(Skin(cur, i[0]))
-    # skins[-1]._get(out_skins)
-    # skins[-1]._import('./maps')
+    skins[-1]._get(path)
+    skins[-1]._import(out_skins)
 
-window = Tk()
-window.title("title")
-window.mainloop()
+# window = Tk()
+# window.title("title")
+# window.mainloop()
 con.close()
